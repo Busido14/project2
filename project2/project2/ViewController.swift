@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
+    var stepCount = 0
     
     
     override func viewDidLoad() {
@@ -41,19 +42,27 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
-        title = countries[correctAnswer].uppercased()
+        title = "\(countries[correctAnswer].uppercased()) you score = \(score)"
         
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
+        var title: String
+        stepCount += 1
         
         if sender.tag == correctAnswer {
-            title = "Correct"
+            title = "Correct That’s the flag \(countries[correctAnswer])"
             score += 1
         }
         else {
-            title = "Wrong!"
+            title = "Wrong!That’s the flag \(countries[sender.tag])"
             score -= 1
+        }
+        if stepCount == 10
+        {
+            title = "You have \(score) score, and You have done \(stepCount)"
+            stepCount = 0
+            score = 0
         }
         
         let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
